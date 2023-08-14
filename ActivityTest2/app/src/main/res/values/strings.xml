@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ActivityTest2</string>
+    <string name="title_activity_edit">EditActivity</string>
+    <string name="title_activity_edit2">EditActivity2</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_edit3">EditActivity3</string>
+</resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:rippleColor="@color/material_dynamic_neutral90"
+    android:layout_margin="5dp"
+    >
+
+<!--
+    app:strokeColor="@color/material_dynamic_neutral70"
+    app:strokeWidth="5dp"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="8dp"
+-->
+
+<!--
+    一张Material卡片，之后这一张张卡片都会添加到
+    recyclerView当中
+
+    centerCrop: 让图片保持原有比例填充满ImageView，
+    并将超出屏幕的部分裁剪掉
+-->
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/goods_image"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            />
+
+        <TextView
+            android:id="@+id/goods_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:text="test"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="@color/material_dynamic_neutral70"
+            android:textColor="@color/black"
+            />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

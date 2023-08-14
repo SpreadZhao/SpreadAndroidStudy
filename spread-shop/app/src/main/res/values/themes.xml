@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+
+<!--
+    引入Material库之后，要把parent改成Material字辈儿的才行
+-->
+<!--    <style name="Theme.SpreadShop" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <style name = "Theme.SpreadShop" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="GoodsActivityTheme" parent="Theme.SpreadShop">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>

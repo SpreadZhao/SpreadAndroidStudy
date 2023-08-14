@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--
+    menu文件夹里的所有试图都是菜单
+        toolbar就是上面工具栏专用的菜单
+        而nav_menu就是Navigation View专用的菜单
+-->
+
+<!--
+    always: 永远显示再Toolbar中，空间不够不显示
+    ifRoom: 屏幕够就显示，不够显示再菜单中
+    never: 永远显示在菜单
+-->
+<!--    <item-->
+<!--        android:id="@+id/backup"-->
+<!--        android:icon="@drawable/ic_backup"-->
+<!--        android:title="Backup"-->
+<!--        app:showAsAction="always"-->
+<!--        />-->
+
+<!--    <item-->
+<!--        android:id="@+id/delete"-->
+<!--        android:icon="@drawable/ic_delete"-->
+<!--        android:title="Delete"-->
+<!--        app:showAsAction="ifRoom"-->
+<!--        />-->
+
+<!--    <item-->
+<!--        android:id="@+id/settings"-->
+<!--        android:icon="@drawable/ic_settings"-->
+<!--        android:title="Settings"-->
+<!--        app:showAsAction="never"-->
+<!--        />-->
+
+    <item
+        android:id="@+id/search_edit"
+        android:icon="@drawable/ic_search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always|collapseActionView"
+        android:title="search_edit"
+        />
+</menu>

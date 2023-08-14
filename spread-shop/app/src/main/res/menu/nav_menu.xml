@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<!--
+    group表示这些项被困成一个组
+    checkableBehavior="single"表示同时只能选中一个
+-->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_mybag"
+            android:title="My Bag"
+            />
+
+        <item
+            android:id="@+id/nav_order"
+            android:title="My Order"
+            />
+
+        <item
+            android:id="@+id/nav_contact"
+            android:title="Contact Customer Service"
+            />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout"
+            />
+    </group>
+</menu>
