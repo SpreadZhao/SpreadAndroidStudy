@@ -57,6 +57,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onStop() {
         Log.e(TAG, "onStop: $this")
+        if (isFinishing) {
+            Log.e(TAG, "Activity is finishing")
+        } else {
+            Log.e(TAG, "Activity is not finishing")
+        }
         super.onStop()
     }
 
