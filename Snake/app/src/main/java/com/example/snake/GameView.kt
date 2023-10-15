@@ -150,7 +150,7 @@ class GameView : View, Runnable {
             judgeEat()
             updateSnakeLoc()
             postInvalidate()
-            Thread.sleep(200)
+            Thread.sleep(50)
         }
     }
 }
