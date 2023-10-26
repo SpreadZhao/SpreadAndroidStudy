@@ -20,11 +20,12 @@ class ShowProgressBarActivity : AppCompatActivity() {
         val image = findViewById<SimpleDraweeView>(R.id.progress_bar_img)
         button.setOnClickListener {
             image.hierarchy.setProgressBarImage(ProgressBarDrawable())
-            val controller = Fresco.newDraweeControllerBuilder()
-                .setUri(uri)
-                .setOldController(image.controller)
-                .build()
-            image.controller = controller
+            image.setImageURI(uri)
+//            val controller = Fresco.newDraweeControllerBuilder()
+//                .setUri(uri)
+//                .setOldController(image.controller)
+//                .build()
+//            image.controller = controller
         }
     }
 }

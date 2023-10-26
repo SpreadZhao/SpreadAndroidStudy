@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.frescodisplaydemo"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.example.frescodisplaydemo"
@@ -39,7 +39,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.facebook.fresco:fresco:3.1.3")
     implementation("com.facebook.fresco:animated-webp:3.1.3")

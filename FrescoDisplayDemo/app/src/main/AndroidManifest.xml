@@ -15,6 +15,15 @@
         android:theme="@style/Theme.FrescoDisplayDemo"
         tools:targetApi="31">
         <activity
+            android:name=".GifActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MultipleScaleTypeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CircleAndCornerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ShowProgressBarActivity"
             android:exported="false" />
         <activity
