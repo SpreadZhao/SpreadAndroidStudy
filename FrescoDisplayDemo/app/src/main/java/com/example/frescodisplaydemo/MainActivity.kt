@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var circleCornerBtn: Button
     private lateinit var multipleScaleBtn: Button
     private lateinit var gifBtn: Button
+    private lateinit var multiMultiplexBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         circleCornerBtn = findViewById(R.id.circle_corner_btn)
         multipleScaleBtn = findViewById(R.id.multiple_scale_type_btn)
         gifBtn = findViewById(R.id.gif)
+        multiMultiplexBtn = findViewById(R.id.multi_multiplex_btn)
     }
 
     private fun initViews() {
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         circleCornerBtn.setOnClickListener { naviToActivity<CircleAndCornerActivity>() }
         multipleScaleBtn.setOnClickListener { naviToActivity<MultipleScaleTypeActivity>() }
         gifBtn.setOnClickListener { naviToActivity<GifActivity>() }
+        multiMultiplexBtn.setOnClickListener { naviToActivity<MultiAndMultiPlexImgActivity>() }
     }
 
     private inline fun <reified T> naviToActivity() {
