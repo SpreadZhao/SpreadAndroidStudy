@@ -1,4 +1,4 @@
-package com.example.frescodisplaydemo
+package com.example.frescodisplaydemo.demos
 
 import android.graphics.PointF
 import android.net.Uri
@@ -8,9 +8,9 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import com.example.frescodisplaydemo.R
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.drawable.ScalingUtils
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder
@@ -79,7 +79,7 @@ class MultipleScaleTypeActivity : AppCompatActivity() {
             ) {
                 mType = position
                 mTextView.text = mExplain[position]
-                // 更新hierarchy和setImageURI必须都执行，不然图片会消失。看看为什么。
+                // TODO: 更新hierarchy和setImageURI必须都执行，不然图片会消失。看看为什么。
                 updateHierarchy()
                 mSimpleDraweeView.setImageURI(uri)
             }

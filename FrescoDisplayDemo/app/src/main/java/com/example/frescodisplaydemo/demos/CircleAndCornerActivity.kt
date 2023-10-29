@@ -1,13 +1,13 @@
-package com.example.frescodisplaydemo
+package com.example.frescodisplaydemo.demos
 
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.example.frescodisplaydemo.R
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.generic.RoundingParams
 import com.facebook.drawee.view.SimpleDraweeView
-import kotlin.math.round
 
 class CircleAndCornerActivity : AppCompatActivity() {
 

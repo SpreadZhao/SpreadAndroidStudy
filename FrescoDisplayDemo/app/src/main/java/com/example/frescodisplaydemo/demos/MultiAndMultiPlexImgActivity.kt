@@ -1,4 +1,4 @@
-package com.example.frescodisplaydemo
+package com.example.frescodisplaydemo.demos
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -7,7 +7,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.core.content.FileProvider
+import android.widget.Toast
+import com.example.frescodisplaydemo.R
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.imagepipeline.request.ImageRequest
@@ -23,6 +24,7 @@ class MultiAndMultiPlexImgActivity : AppCompatActivity() {
     private lateinit var mMultiBtn: Button
     private lateinit var mSaveBtn: Button
     private lateinit var mMultiplexBtn: Button
+    private lateinit var mDeleteBtn: Button
 
     private val lowResUri =
         "https://gw.alicdn.com/bao/uploaded/i4/106333868/O1CN017vtRdZ1eRas7lU3g6_!!0-saturn_solar.jpg_300x300q90.jpg"
@@ -47,6 +49,7 @@ class MultiAndMultiPlexImgActivity : AppCompatActivity() {
         mMultiBtn = findViewById(R.id.multi_btn)
         mMultiplexBtn = findViewById(R.id.multiplex_btn)
         mSaveBtn = findViewById(R.id.multi_save_btn)
+        mDeleteBtn = findViewById(R.id.delete_saved_btn)
     }
 
     private fun setListeners() {
@@ -73,6 +76,7 @@ class MultiAndMultiPlexImgActivity : AppCompatActivity() {
          * 本地的图片已经存在了；
          * 但是如果我此时退出应用重进，获取到的就是本地的图片了。
          * TODO: 看看源码，为什么会有这样的问题。
+         * UPDATE: 我猜测，是因为不管什么方式，请求回来Fresco都会缓存，因为第二次进入就没有动画了。
          */
         mMultiplexBtn.setOnClickListener {
             val file = File(filesDir, "picture.jpeg")
@@ -85,6 +89,15 @@ class MultiAndMultiPlexImgActivity : AppCompatActivity() {
             mSimpleDraweeView.controller = controller
         }
         mSaveBtn.setOnClickListener { thread { getImageAndSave() } }
+        mDeleteBtn.setOnClickListener {
+            val file = File(filesDir, "picture.jpeg")
+            if (file.exists()) {
+                file.delete()
+                Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "图片不存在", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun getImageAndSave() {

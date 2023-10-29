@@ -40,4 +40,39 @@
         android:text="预加载小图，本地缓存+网络"
         />
 
+    <Button
+        android:id="@+id/modify_img_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="修改图片"
+        />
+
+    <Button
+        android:id="@+id/auto_size_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="动态展示图片"
+        />
+
+    <Button
+        android:id="@+id/jpeg_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="渐进式展示图片"
+        />
+
+    <Button
+        android:id="@+id/retry_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="失败重试demo"
+        />
+
+    <Button
+        android:id="@+id/grey_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="图片变灰"
+        />
+
 </LinearLayout>

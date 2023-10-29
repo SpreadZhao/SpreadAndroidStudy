@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".demos.GrayScaleActivity"
+    >
+
+<!--    tools:context有什么用？https://blog.csdn.net/yw1688/article/details/54094200-->
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/grey_scale_view"
+        android:layout_width="300dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        />
+
+    <Button
+        android:id="@+id/grey_scale_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Turn to Grey"
+        />
+
+</LinearLayout>

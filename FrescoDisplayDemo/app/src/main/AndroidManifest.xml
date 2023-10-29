@@ -15,9 +15,23 @@
         android:theme="@style/Theme.FrescoDisplayDemo"
         tools:targetApi="31">
         <activity
-            android:name=".BlurAndRotateActivity"
+            android:name=".demos.GrayScaleActivity"
             android:exported="false" />
-        <!-- <provider -->
+        <activity
+            android:name=".demos.RetryAndFailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".demos.JPEGImgActivity"
+            android:exported="false" />
+        <activity
+            android:name=".demos.AutoSizeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".demos.ModifyImgActivity"
+            android:exported="false" />
+        <activity
+            android:name=".demos.BlurAndRotateActivity"
+            android:exported="false" /> <!-- <provider -->
         <!-- android:authorities="com.example.frescodisplaydemo.fileprovider" -->
         <!-- android:name="androidx.core.content.FileProvider" -->
         <!-- android:grantUriPermissions="true" -->
@@ -29,19 +43,19 @@
         <!-- </meta-data> -->
         <!-- </provider> -->
         <activity
-            android:name=".MultiAndMultiPlexImgActivity"
+            android:name=".demos.MultiAndMultiPlexImgActivity"
             android:exported="false" />
         <activity
-            android:name=".GifActivity"
+            android:name=".demos.GifActivity"
             android:exported="false" />
         <activity
-            android:name=".MultipleScaleTypeActivity"
+            android:name=".demos.MultipleScaleTypeActivity"
             android:exported="false" />
         <activity
-            android:name=".CircleAndCornerActivity"
+            android:name=".demos.CircleAndCornerActivity"
             android:exported="false" />
         <activity
-            android:name=".ShowProgressBarActivity"
+            android:name=".demos.ShowProgressBarActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

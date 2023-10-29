@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/fail_retry_img"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:failureImage="@drawable/failure"
+        fresco:failureImageScaleType="centerInside"
+        fresco:placeholderImage="@drawable/ic_launcher_foreground"
+        fresco:progressBarAutoRotateInterval="5000"
+        fresco:progressBarImage="@drawable/loading"
+        fresco:progressBarImageScaleType="centerInside"
+        fresco:retryImage="@drawable/retry"
+        fresco:retryImageScaleType="centerCrop"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:layout_gravity="center"
+        android:text="点击图片重试"
+        />
+
+</LinearLayout>
