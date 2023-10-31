@@ -4,16 +4,16 @@ import android.graphics.Bitmap
 import com.facebook.imagepipeline.request.BasePostprocessor
 
 class FastGreyScalePostProcessor : BasePostprocessor() {
-    override fun process(bitmap: Bitmap) {
-        val w = bitmap.width
-        val h = bitmap.height
-        val pixels = IntArray(w * h)
-        bitmap.getPixels(pixels, 0, w, 0, 0, w, h)
-        for (x in 0 ..< w) {
-            for (y in 0 ..< h) {
-                val offset = y * w + x
-                pixels[offset] = getGreyColor(pixels[offset])
-            }
+  override fun process(bitmap: Bitmap) {
+    val w = bitmap.width
+    val h = bitmap.height
+    val pixels = IntArray(w * h)
+    bitmap.getPixels(pixels, 0, w, 0, 0, w, h)
+    for (x in 0..<w) {
+      for (y in 0..<h) {
+        val offset = y * w + x
+        pixels[offset] = getGreyColor(pixels[offset])
+      }
         }
         bitmap.setPixels(pixels, 0, w, 0, 0, w, h)
     }

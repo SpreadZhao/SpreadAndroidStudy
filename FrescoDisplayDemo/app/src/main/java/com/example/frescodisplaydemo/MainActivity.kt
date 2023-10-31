@@ -1,9 +1,9 @@
 package com.example.frescodisplaydemo
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.example.frescodisplaydemo.demos.AutoSizeActivity
 import com.example.frescodisplaydemo.demos.CircleAndCornerActivity
 import com.example.frescodisplaydemo.demos.GifActivity
