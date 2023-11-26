@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#608BE8F6"
-    >
+    android:background="#608BE8F6">
 
     <TextView
         android:id="@+id/time"

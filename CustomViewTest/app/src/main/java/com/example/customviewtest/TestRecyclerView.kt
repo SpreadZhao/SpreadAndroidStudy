@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TestRecyclerView(context: Context) : RecyclerView(context) {
 
-    override fun setAdapter(adapter: Adapter<*>?) {
+  override fun setAdapter(adapter: Adapter<*>?) {
 
-    }
+  }
 }
