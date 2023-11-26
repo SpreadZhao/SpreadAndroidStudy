@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.example.customviewtest.BezierView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_bezier"
+        android:padding="10dp"
+        android:background="#33000000" />
+
+
+    <com.example.customviewtest.MarqueeText
+        android:id="@+id/marquee"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/control_marquee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/window_ctl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Window" />
+
+    <TextView
+        android:id="@+id/test_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.example.customviewtest.CircleView
+        android:id="@+id/circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.example.customviewtest.BubbleView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:bubble_radius="10dp"
+        app:bubble_text="S" />
+
+    <Button
+        android:id="@+id/start_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Second" />
+
+    <Button
+        android:id="@+id/start_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Me" />
+
+</LinearLayout>
+
+
