@@ -10,15 +10,15 @@ class MainApplication : Application() {
 
 //    lateinit var window: TimeWindow
 
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        lateinit var context: Context
-    }
+  companion object {
+    @SuppressLint("StaticFieldLeak")
+    lateinit var context: Context
+  }
 
-    override fun onCreate() {
-        super.onCreate()
-        context = applicationContext
+  override fun onCreate() {
+    super.onCreate()
+    context = applicationContext
 //        window = TimeWindow(this)
 //        BlockCanary.install(this, AppBlockCanaryContext()).start()
-    }
+  }
 }
