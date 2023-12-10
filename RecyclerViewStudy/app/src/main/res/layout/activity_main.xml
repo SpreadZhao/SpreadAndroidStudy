@@ -36,6 +36,19 @@
             android:text="Update"
             android:textSize="10sp" />
 
+        <Button
+            android:id="@+id/refresh"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@color/design_default_color_primary_dark"
+            android:gravity="top|center"
+            android:paddingTop="2dp"
+            android:paddingBottom="0dp"
+            android:text="Refresh"
+            android:textSize="10sp" />
+
     </LinearLayout>
 
 

@@ -82,6 +82,7 @@ class RecyclerViewManager(private val activity: Activity) {
       layoutManager = LinearLayoutManager(activity)
       adapter = peopleAdapter
       visibility = View.VISIBLE
+//      itemAnimator = null
     }
 
     // Add RecyclerView to the root view
@@ -99,5 +100,10 @@ class RecyclerViewManager(private val activity: Activity) {
   fun changePeople(index: Int, people: People) {
     peopleList[index] = people
     peopleAdapter.notifyItemChanged(index)
+  }
+
+  fun reversePeople() {
+    peopleList.reverse()
+    peopleAdapter.notifyDataSetChanged()
   }
 }

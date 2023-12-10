@@ -45,6 +45,9 @@ class MainActivity : AppCompatActivity() {
     findButtonAndSetClick(R.id.change_third) {
       recyclerViewManager.checkNull()?.changePeople(3, newPeople)
     }
+    findButtonAndSetClick(R.id.refresh) {
+      recyclerViewManager.checkNull()?.reversePeople()
+    }
   }
 
   private fun findButtonAndSetClick(id: Int, onClick: OnClickListener) {
