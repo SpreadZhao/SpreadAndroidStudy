@@ -1,117 +1,57 @@
 package com.spread.recyclerviewstudy
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.Button
+import android.widget.LinearLayout
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutParams
 import com.spread.recyclerviewstudy.recyclerview.Female
 import com.spread.recyclerviewstudy.recyclerview.Gender
 import com.spread.recyclerviewstudy.recyclerview.Male
 import com.spread.recyclerviewstudy.recyclerview.People
 import com.spread.recyclerviewstudy.recyclerview.PeopleAdapter
+import com.spread.recyclerviewstudy.recyclerview.RecyclerViewManager
+import com.spread.recyclerviewstudy.recyclerview.generateItemView
 
 class MainActivity : AppCompatActivity() {
-    private var age = 1
-    private val peopleList = listOf(
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male),
-        People("spread", age++, Male),
-        People("haha", age++, Female),
-        People("sdfsdf", age++, Male)
-    )
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        // Use the correct layout for setContentView
-        setContentView(R.layout.activity_main)
+  private val recyclerViewManager = RecyclerViewManager(this)
 
-        // Get the root view from the content view
-        val rootView = findViewById<ViewGroup>(R.id.root_layout)
-
-        // Create and configure RecyclerView
-        val recyclerView = RecyclerView(this).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = PeopleAdapter(this@MainActivity, peopleList)
-            visibility = View.VISIBLE
-        }
-
-        // Add RecyclerView to the root view
-        rootView.addView(recyclerView)
+  private val newPeople = People("xiedaowang", 999, Male)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    enableEdgeToEdge()
+    setContentView(R.layout.activity_main)
+    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout)) { v, insets ->
+      val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+      v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+      insets
     }
+    recyclerViewManager.initRecyclerView()
+    initButtons()
+  }
+
+  private fun initButtons() {
+    findButtonAndSetClick(R.id.add_marque) {
+      recyclerViewManager.checkNull()?.addPeople(newPeople)
+    }
+    findButtonAndSetClick(R.id.change_third) {
+      recyclerViewManager.checkNull()?.changePeople(3, newPeople)
+    }
+  }
+
+  private fun findButtonAndSetClick(id: Int, onClick: OnClickListener) {
+    findViewById<Button>(id).setOnClickListener(onClick)
+  }
+
+  private fun RecyclerViewManager.checkNull(): RecyclerViewManager? = run {
+    takeIf { recyclerViewManager.recyclerViewInitialized }
+  }
 }
