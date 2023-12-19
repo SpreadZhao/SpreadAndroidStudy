@@ -17,4 +17,25 @@
         android:layout_height="wrap_content"
         android:text="Trouble Views"
         />
+
+    <Button
+        android:id="@+id/view_pager_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ViewPager"
+        />
+
+    <Button
+        android:id="@+id/view_pager2_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ViewPager2"
+        />
+
+    <Button
+        android:id="@+id/pager_snap_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PagerSnap"
+        />
 </LinearLayout>

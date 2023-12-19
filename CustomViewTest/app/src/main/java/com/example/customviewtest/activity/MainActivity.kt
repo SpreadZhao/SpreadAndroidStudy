@@ -27,14 +27,22 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
   private val buttons = ArrayList<Button>()
 
+  private val ids = listOf(
+    R.id.simple_btn,
+    R.id.trouble_btn,
+    R.id.view_pager_btn,
+    R.id.view_pager2_btn,
+    R.id.pager_snap_btn
+  )
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    findButtonsAndAdd<Button>(R.id.simple_btn, R.id.trouble_btn)
+    findButtonsAndAdd<Button>(ids)
     setListener()
   }
 
-  private inline fun <reified V : Button> findButtonsAndAdd(vararg ids: Int) {
+  private inline fun <reified V : Button> findButtonsAndAdd(ids: List<Int>) {
     ids.forEach {
       val view = findViewById<V>(it)
       buttons.add(view)
@@ -49,6 +57,9 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     when (v.id) {
       R.id.simple_btn -> naviToActiviy(SimpleActivity::class.java)
       R.id.trouble_btn -> naviToActiviy(TroubleActivity::class.java)
+      R.id.view_pager_btn -> naviToActiviy(ViewPagerActivity::class.java)
+      R.id.view_pager2_btn -> naviToActiviy(ViewPager2Activity::class.java)
+      R.id.pager_snap_btn -> naviToActiviy(PagerSnapActivity::class.java)
     }
   }
 
