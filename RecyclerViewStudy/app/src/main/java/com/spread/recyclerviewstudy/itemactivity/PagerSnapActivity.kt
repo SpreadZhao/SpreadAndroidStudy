@@ -1,4 +1,4 @@
-package com.example.customviewtest.activity
+package com.spread.recyclerviewstudy.itemactivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,8 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.customviewtest.R
+import com.spread.recyclerviewstudy.R
 
 class PagerSnapActivity : AppCompatActivity() {
 
@@ -74,5 +73,5 @@ class PagerSnapActivity : AppCompatActivity() {
 
   }
 
-  inner class MyViewHolder(itemView: View) : ViewHolder(itemView)
+  inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/add_marque"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@color/design_default_color_primary_dark"
+            android:gravity="top|center"
+            android:paddingTop="2dp"
+            android:paddingBottom="0dp"
+            android:text="Add"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/change_third"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@color/design_default_color_primary_dark"
+            android:gravity="top|center"
+            android:paddingTop="2dp"
+            android:paddingBottom="0dp"
+            android:text="Update"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/refresh"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@color/design_default_color_primary_dark"
+            android:gravity="top|center"
+            android:paddingTop="2dp"
+            android:paddingBottom="0dp"
+            android:text="Refresh"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

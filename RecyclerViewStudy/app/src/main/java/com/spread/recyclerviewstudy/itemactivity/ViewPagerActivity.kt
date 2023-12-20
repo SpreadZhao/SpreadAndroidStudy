@@ -1,10 +1,7 @@
-package com.example.customviewtest.activity
+package com.spread.recyclerviewstudy.itemactivity
 
-import android.content.Context
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Layout.Alignment
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.example.customviewtest.R
+import com.spread.recyclerviewstudy.R
 
 class ViewPagerActivity : AppCompatActivity() {
 
