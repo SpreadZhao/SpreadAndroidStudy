@@ -1,5 +1,6 @@
 package com.spread.recyclerviewstudy.itemactivity
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,12 @@ import androidx.recyclerview.widget.RecyclerView.LayoutParams
 import com.spread.recyclerviewstudy.R
 
 class BigItemRecyclerViewActivity : AppCompatActivity() {
+
+  companion object {
+    private const val SCREEN_HEIGHT = 2892
+    private const val HALF_SCREEN_HEIGHT = SCREEN_HEIGHT shr 1
+    private const val QUARTER_SCREEN_HEIGHT = HALF_SCREEN_HEIGHT shr 1
+  }
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
@@ -43,13 +50,16 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
     }
   }
 
+  class MyLinearLayoutManager(context: Context) : LinearLayoutManager(context) {
+  }
+
   inner class MyAdapter : RecyclerView.Adapter<MyViewHolder>() {
 
-    private val nums = mutableListOf(1, 2, 3, 4, 5)
+    private val nums = mutableListOf(1, 2)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
       val view = LayoutInflater.from(parent.context).inflate(R.layout.big_text, parent, false).apply {
-        layoutParams = ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, 2892 / 2)
+        layoutParams = ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, QUARTER_SCREEN_HEIGHT)
       }
       return MyViewHolder(view)
     }

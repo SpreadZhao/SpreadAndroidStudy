@@ -1,4 +1,4 @@
-package com.spread.recyclerviewstudy
+package com.spread.recyclerviewstudy.customviews
 
 import android.content.Context
 import android.graphics.Canvas
