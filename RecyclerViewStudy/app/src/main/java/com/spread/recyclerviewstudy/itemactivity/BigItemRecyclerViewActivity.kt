@@ -16,6 +16,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.marginTop
+import androidx.core.view.setMargins
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutParams
@@ -55,11 +57,11 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
 
   inner class MyAdapter : RecyclerView.Adapter<MyViewHolder>() {
 
-    private val nums = mutableListOf(1, 2)
+    private val nums = mutableListOf(1, 2, 3, 4, 5)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
       val view = LayoutInflater.from(parent.context).inflate(R.layout.big_text, parent, false).apply {
-        layoutParams = ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, QUARTER_SCREEN_HEIGHT)
+        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, QUARTER_SCREEN_HEIGHT + 10)
       }
       return MyViewHolder(view)
     }
@@ -70,8 +72,15 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
         textSize = 100f
         gravity = Gravity.CENTER
         background = ContextCompat.getDrawable(this@BigItemRecyclerViewActivity, com.google.android.material.R.color.design_default_color_primary)
+
       }
     }
+
+//    private fun View.setMargin(margin: Int) {
+//      apply {
+//
+//      }
+//    }
 
     override fun getItemCount() = nums.size
 
