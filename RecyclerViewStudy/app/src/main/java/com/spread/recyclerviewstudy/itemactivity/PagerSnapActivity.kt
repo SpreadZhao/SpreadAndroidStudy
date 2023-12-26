@@ -44,6 +44,13 @@ class PagerSnapActivity : AppCompatActivity() {
           width
         }
       }
+//      override fun calculateExtraLayoutSpace(
+//        state: RecyclerView.State,
+//        extraLayoutSpace: IntArray
+//      ) {
+//        extraLayoutSpace[0] = height
+//        extraLayoutSpace[1] = height
+//      }
     }.apply {
       isItemPrefetchEnabled = false
     }
@@ -67,6 +74,11 @@ class PagerSnapActivity : AppCompatActivity() {
         background = ContextCompat.getDrawable(this@PagerSnapActivity, com.google.android.material.R.color.design_default_color_primary)
       }
       Log.d(TAG, "current bind: ${nums[position]}")
+    }
+
+    override fun onViewRecycled(holder: MyViewHolder) {
+      super.onViewRecycled(holder)
+      Log.d(TAG, "Recycle: ${holder.itemView.findViewById<TextView>(R.id.big_text_text).text}")
     }
 
     override fun getItemCount() = nums.size
