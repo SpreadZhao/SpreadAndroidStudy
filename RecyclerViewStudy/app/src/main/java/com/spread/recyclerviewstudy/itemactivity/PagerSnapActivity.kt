@@ -14,9 +14,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.spread.recyclerviewstudy.R
+import kotlin.math.min
 
 class PagerSnapActivity : AppCompatActivity() {
 
@@ -38,11 +40,7 @@ class PagerSnapActivity : AppCompatActivity() {
     recyclerView.setHasFixedSize(true)
     recyclerView.layoutManager = object : LinearLayoutManager(this) {
       override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
-        return if (orientation == RecyclerView.VERTICAL) {
-          height
-        } else {
-          width
-        }
+        return min(height, width)
       }
 //      override fun calculateExtraLayoutSpace(
 //        state: RecyclerView.State,
@@ -54,7 +52,70 @@ class PagerSnapActivity : AppCompatActivity() {
     }.apply {
       isItemPrefetchEnabled = false
     }
-    PagerSnapHelper().attachToRecyclerView(recyclerView)
+    myPageSnapHelper.attachToRecyclerView(recyclerView)
+  }
+
+  private val myPageSnapHelper = object : PagerSnapHelper() {
+    override fun findTargetSnapPosition(
+      layoutManager: RecyclerView.LayoutManager,
+      velocityX: Int,
+      velocityY: Int
+    ): Int {
+      val itemCount = layoutManager.itemCount
+      if (itemCount == 0) {
+        return RecyclerView.NO_POSITION
+      }
+      val verticalHelper = OrientationHelper.createVerticalHelper(layoutManager)
+      val horizontalHelper = OrientationHelper.createHorizontalHelper(layoutManager)
+      val mStartMostChildView = if (layoutManager.canScrollVertically()) {
+        findStartView(layoutManager, verticalHelper)
+      } else {
+        findStartView(layoutManager, horizontalHelper)
+      }
+      if (mStartMostChildView == null) {
+        return RecyclerView.NO_POSITION
+      }
+      val centerPosition = layoutManager.getPosition(mStartMostChildView)
+      if (centerPosition == RecyclerView.NO_POSITION) {
+        return RecyclerView.NO_POSITION
+      }
+      val forwardDirection = if (layoutManager.canScrollHorizontally()) {
+        velocityX > 0
+      } else {
+        velocityY > 0
+      }
+      var reverseLayout = false
+      if (layoutManager is RecyclerView.SmoothScroller.ScrollVectorProvider) {
+        val vectorProvider = layoutManager as RecyclerView.SmoothScroller.ScrollVectorProvider
+        val vectorForEnd = vectorProvider.computeScrollVectorForPosition(itemCount - 1)
+        if (vectorForEnd != null) {
+          reverseLayout = vectorForEnd.x < 0 || vectorForEnd.y < 0
+        }
+      }
+      return if (reverseLayout){
+        if (forwardDirection) centerPosition - 1 else centerPosition
+      } else {
+        if (forwardDirection) centerPosition + 1 else centerPosition
+      }
+    }
+
+    private fun findStartView(layoutManager: RecyclerView.LayoutManager, helper: OrientationHelper): View? {
+      val childCount = layoutManager.childCount
+      if (childCount == 0){
+        return null
+      }
+      var closestChild: View? = null
+      var startest = Int.MAX_VALUE
+      for (i in 0 ..< childCount) {
+        val child = layoutManager.getChildAt(i)
+        val childStart = helper.getDecoratedStart(child)
+        if (childStart < startest) {
+          startest = childStart
+          closestChild = child
+        }
+      }
+      return closestChild
+    }
   }
 
   inner class MyAdapter : RecyclerView.Adapter<MyViewHolder>() {
