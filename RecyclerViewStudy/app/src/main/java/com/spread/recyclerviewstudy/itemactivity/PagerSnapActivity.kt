@@ -42,19 +42,15 @@ class PagerSnapActivity : AppCompatActivity() {
       override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
         return min(height, width)
       }
-//      override fun calculateExtraLayoutSpace(
-//        state: RecyclerView.State,
-//        extraLayoutSpace: IntArray
-//      ) {
-//        extraLayoutSpace[0] = height
-//        extraLayoutSpace[1] = height
-//      }
     }.apply {
       isItemPrefetchEnabled = false
     }
-    myPageSnapHelper.attachToRecyclerView(recyclerView)
+    PagerSnapHelper().attachToRecyclerView(recyclerView)
   }
 
+  /**
+   * 老版的PagerSnapHelper，下刷一个，上刷两个。
+   */
   private val myPageSnapHelper = object : PagerSnapHelper() {
     override fun findTargetSnapPosition(
       layoutManager: RecyclerView.LayoutManager,
