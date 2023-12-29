@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -17,8 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutParams
 import com.spread.recyclerviewstudy.R
-import kotlin.math.min
+import kotlin.math.max
 
 class PagerSnapActivity : AppCompatActivity() {
 
@@ -40,7 +42,7 @@ class PagerSnapActivity : AppCompatActivity() {
     recyclerView.setHasFixedSize(true)
     recyclerView.layoutManager = object : LinearLayoutManager(this) {
       override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
-        return min(height, width)
+        return max(height, width)
       }
     }.apply {
       isItemPrefetchEnabled = false
@@ -116,7 +118,7 @@ class PagerSnapActivity : AppCompatActivity() {
 
   inner class MyAdapter : RecyclerView.Adapter<MyViewHolder>() {
 
-    private val nums = listOf(1, 2, 3, 4, 5)
+    private val dataSet = createListData(1..5, 11, 22)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
       val view = LayoutInflater.from(parent.context).inflate(R.layout.big_text, parent, false)
@@ -125,12 +127,18 @@ class PagerSnapActivity : AppCompatActivity() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
       holder.itemView.findViewById<TextView>(R.id.big_text_text).apply {
-        text = nums[position].toString()
+        text = dataSet[position].num.toString()
         textSize = 100f
-        gravity = Gravity.CENTER
+        adjustGravity()
         background = ContextCompat.getDrawable(this@PagerSnapActivity, com.google.android.material.R.color.design_default_color_primary)
       }
-      Log.d(TAG, "current bind: ${nums[position]}")
+      holder.itemView.findViewById<TextView>(R.id.big_text_type).apply {
+        text = "type: ${dataSet[position].type}"
+        textSize = 10f
+        adjustGravityForType()
+        background = ContextCompat.getDrawable(this@PagerSnapActivity, com.google.android.material.R.color.design_default_color_primary)
+      }
+//      Log.d(TAG, "current bind: ${nums[position]}")
     }
 
     override fun onViewRecycled(holder: MyViewHolder) {
@@ -138,9 +146,47 @@ class PagerSnapActivity : AppCompatActivity() {
       Log.d(TAG, "Recycle: ${holder.itemView.findViewById<TextView>(R.id.big_text_text).text}")
     }
 
-    override fun getItemCount() = nums.size
+    override fun onViewDetachedFromWindow(holder: MyViewHolder) {
+      Log.d(TAG, "Detach: ${holder.itemView.findViewById<TextView>(R.id.big_text_text).text}")
+      super.onViewDetachedFromWindow(holder)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+      return dataSet[position].type
+    }
+
+    override fun getItemCount() = dataSet.size
 
   }
 
   inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+}
+
+data class Data(val num: Int, val type: Int)
+
+fun createListData(fromTo: IntRange, type1: Int, type2: Int): MutableList<Data> {
+  val res = mutableListOf<Data>()
+  for (i in fromTo) {
+    val type = if (i % 2 == 0) type1 else type2
+    res.add(Data(i, type))
+  }
+  return res
+}
+
+fun TextView.adjustGravity() = this.apply {
+  gravity = Gravity.CENTER
+
+  layoutParams =
+    FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
+      this.gravity = Gravity.CENTER
+    }
+}
+
+fun TextView.adjustGravityForType() = this.apply {
+  gravity = Gravity.CENTER
+
+  layoutParams =
+    FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
+      this.gravity = Gravity.CENTER or Gravity.BOTTOM
+    }
 }
