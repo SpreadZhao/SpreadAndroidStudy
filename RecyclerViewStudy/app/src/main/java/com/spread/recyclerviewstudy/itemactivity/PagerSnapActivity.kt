@@ -1,7 +1,11 @@
 package com.spread.recyclerviewstudy.itemactivity
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -18,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import androidx.recyclerview.widget.RecyclerView.LayoutParams
 import com.spread.recyclerviewstudy.R
 import kotlin.math.max
@@ -30,7 +35,7 @@ class PagerSnapActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
     setContentView(R.layout.activity_pager_snap)
-    val rootView = findViewById<ConstraintLayout>(R.id.main)
+    val rootView = findViewById<FrameLayout>(R.id.main)
     ViewCompat.setOnApplyWindowInsetsListener(rootView) { v, insets ->
       val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
       v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -40,14 +45,50 @@ class PagerSnapActivity : AppCompatActivity() {
     recyclerView.adapter = MyAdapter()
     recyclerView.setItemViewCacheSize(0)
     recyclerView.setHasFixedSize(true)
-    recyclerView.layoutManager = object : LinearLayoutManager(this) {
-      override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
-        return max(height, width)
-      }
-    }.apply {
+    recyclerView.layoutManager = myLinearLayoutManager.apply {
       isItemPrefetchEnabled = false
+      adjustPreloadTime = true
     }
-    PagerSnapHelper().attachToRecyclerView(recyclerView)
+//    PagerSnapHelper().attachToRecyclerView(recyclerView)
+  }
+
+  private val myLinearLayoutManager = object : LinearLayoutManager(this) {
+    private var mIsInScroll = false
+    private var mScrollState = RecyclerView.SCROLL_STATE_IDLE
+    var adjustPreloadTime = false
+    private val mTriggerPreloadRunnable = Runnable {
+      if (!mIsInScroll) { // 手不在屏幕上时才触发
+        requestLayout()
+      }
+    }
+    val mHandler = Handler(Looper.getMainLooper())
+    override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
+      // 手指滑动的时候产生的布局会走这里，我们自己的requestLayout()也会走这里。
+      // 如果设置adjustPreloadTime为true，表示我们只想在滑动结束，手指离开屏幕的时候
+      // 也就是自己的requestLayout()中不走这里。那么就要让mIsInScroll为false，这样
+      // 之后的布局就能够得到额外的空间。
+      if (adjustPreloadTime && mIsInScroll) {
+        return super.getExtraLayoutSpace(state)
+      }
+      val size = if (orientation == RecyclerView.HORIZONTAL) {
+        width
+      } else {
+        height
+      }
+      return if (size < 0) 0 else size
+    }
+
+    override fun onScrollStateChanged(state: Int) {
+      Log.d(TAG, "Scroll State change: ${getScrollState(state)}")
+      super.onScrollStateChanged(state)
+      mIsInScroll = state != RecyclerView.SCROLL_STATE_IDLE
+      if (adjustPreloadTime) {
+        mHandler.removeCallbacks(mTriggerPreloadRunnable)
+        if (!mIsInScroll) {
+          mHandler.post(mTriggerPreloadRunnable)
+        }
+      }
+    }
   }
 
   /**
@@ -118,10 +159,18 @@ class PagerSnapActivity : AppCompatActivity() {
 
   inner class MyAdapter : RecyclerView.Adapter<MyViewHolder>() {
 
-    private val dataSet = createListData(1..5, 11, 22)
+    private val dataSet = createListData(1..10, 11, 22)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-      val view = LayoutInflater.from(parent.context).inflate(R.layout.big_text, parent, false)
+      val view = if (viewType == 11) {
+        LayoutInflater.from(parent.context).inflate(R.layout.big_text_with_moving_text, parent, false).apply {
+          background = ColorDrawable(Color.parseColor("#CC0033"))
+        }
+      } else {
+        LayoutInflater.from(parent.context).inflate(R.layout.big_text, parent, false).apply {
+          background = ColorDrawable(Color.parseColor("#0066CC"))
+        }
+      }
       return MyViewHolder(view)
     }
 
@@ -130,13 +179,11 @@ class PagerSnapActivity : AppCompatActivity() {
         text = dataSet[position].num.toString()
         textSize = 100f
         adjustGravity()
-        background = ContextCompat.getDrawable(this@PagerSnapActivity, com.google.android.material.R.color.design_default_color_primary)
       }
       holder.itemView.findViewById<TextView>(R.id.big_text_type).apply {
         text = "type: ${dataSet[position].type}"
         textSize = 10f
         adjustGravityForType()
-        background = ContextCompat.getDrawable(this@PagerSnapActivity, com.google.android.material.R.color.design_default_color_primary)
       }
 //      Log.d(TAG, "current bind: ${nums[position]}")
     }
@@ -189,4 +236,11 @@ fun TextView.adjustGravityForType() = this.apply {
     FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
       this.gravity = Gravity.CENTER or Gravity.BOTTOM
     }
+}
+
+fun getScrollState(state: Int) = when (state) {
+  0 -> "IDLE"
+  1 -> "DRAGGING"
+  2 -> "SETTLING"
+  else -> "NULL"
 }
