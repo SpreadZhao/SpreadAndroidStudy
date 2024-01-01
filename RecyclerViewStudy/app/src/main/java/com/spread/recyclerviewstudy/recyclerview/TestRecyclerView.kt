@@ -22,4 +22,9 @@ class TestRecyclerView : RecyclerView {
   override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
     return super.dispatchTouchEvent(ev)
   }
+
+  override fun onTouchEvent(e: MotionEvent?): Boolean {
+    return super.onTouchEvent(e)
+//    return false
+  }
 }

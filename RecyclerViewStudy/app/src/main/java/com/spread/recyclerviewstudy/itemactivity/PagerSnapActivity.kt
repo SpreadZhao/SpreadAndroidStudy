@@ -49,13 +49,13 @@ class PagerSnapActivity : AppCompatActivity() {
       isItemPrefetchEnabled = false
       adjustPreloadTime = true
     }
-//    PagerSnapHelper().attachToRecyclerView(recyclerView)
+    PagerSnapHelper().attachToRecyclerView(recyclerView)
   }
 
   private val myLinearLayoutManager = object : LinearLayoutManager(this) {
     private var mIsInScroll = false
     private var mScrollState = RecyclerView.SCROLL_STATE_IDLE
-    var adjustPreloadTime = false
+    var adjustPreloadTime = false // 为true表示滑动完之后才手动预渲染
     private val mTriggerPreloadRunnable = Runnable {
       if (!mIsInScroll) { // 手不在屏幕上时才触发
         requestLayout()
@@ -67,6 +67,7 @@ class PagerSnapActivity : AppCompatActivity() {
       // 如果设置adjustPreloadTime为true，表示我们只想在滑动结束，手指离开屏幕的时候
       // 也就是自己的requestLayout()中不走这里。那么就要让mIsInScroll为false，这样
       // 之后的布局就能够得到额外的空间。
+      // BugFix: 认准一点，导致预渲染卡片被回收的布局，是动画的requestLayout()，而不是滑动流程！
       if (adjustPreloadTime && mIsInScroll) {
         return super.getExtraLayoutSpace(state)
       }
@@ -78,16 +79,22 @@ class PagerSnapActivity : AppCompatActivity() {
       return if (size < 0) 0 else size
     }
 
+    // IDLE -> DRAGGING -> SETTLING -> IDLE -> DRAGGING -> SETTLING -> IDLE -> ...
+
+//    override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
+//      return height
+//    }
+
     override fun onScrollStateChanged(state: Int) {
-      Log.d(TAG, "Scroll State change: ${getScrollState(state)}")
-      super.onScrollStateChanged(state)
-      mIsInScroll = state != RecyclerView.SCROLL_STATE_IDLE
-      if (adjustPreloadTime) {
-        mHandler.removeCallbacks(mTriggerPreloadRunnable)
-        if (!mIsInScroll) {
-          mHandler.post(mTriggerPreloadRunnable)
+        Log.d(TAG, "Scroll State change: ${getScrollState(state)}")
+        super.onScrollStateChanged(state)
+        mIsInScroll = state != RecyclerView.SCROLL_STATE_IDLE
+        if (adjustPreloadTime) {
+          mHandler.removeCallbacks(mTriggerPreloadRunnable)
+          if (!mIsInScroll) {
+            mHandler.post(mTriggerPreloadRunnable)
+          }
         }
-      }
     }
   }
 
@@ -198,6 +205,11 @@ class PagerSnapActivity : AppCompatActivity() {
       super.onViewDetachedFromWindow(holder)
     }
 
+    override fun onViewAttachedToWindow(holder: MyViewHolder) {
+      Log.d(TAG, "Attach: ${holder.itemView.findViewById<TextView>(R.id.big_text_text).text}")
+      super.onViewAttachedToWindow(holder)
+    }
+
     override fun getItemViewType(position: Int): Int {
       return dataSet[position].type
     }
@@ -224,7 +236,7 @@ fun TextView.adjustGravity() = this.apply {
   gravity = Gravity.CENTER
 
   layoutParams =
-    FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
+    FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT).apply {
       this.gravity = Gravity.CENTER
     }
 }
