@@ -2,8 +2,10 @@ package com.spread.recyclerviewstudy.customviews
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatTextView
+import com.spread.recyclerviewstudy.recyclerview.actionStr
 
 class TestTextView : AppCompatTextView {
 
@@ -23,7 +25,7 @@ class TestTextView : AppCompatTextView {
   }
 
   override fun onTouchEvent(event: MotionEvent?): Boolean {
-    super.onTouchEvent(event)
-    return true
+    Log.d("TestRecyclerView", "ViewItem handle ${event?.actionStr()}[${event?.hashCode()}]")
+    return super.onTouchEvent(event)
   }
 }
