@@ -15,6 +15,7 @@ class MyFrameLayout : FrameLayout {
 
   override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
     Log.d("TouchEventSpread", "FrameLayout intercept ${ev?.actionStr()} event")
+    if (ev?.action == MotionEvent.ACTION_MOVE) return true
     return super.onInterceptTouchEvent(ev)
   }
 

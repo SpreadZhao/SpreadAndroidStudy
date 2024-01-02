@@ -14,18 +14,14 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import androidx.recyclerview.widget.RecyclerView.LayoutParams
 import com.spread.recyclerviewstudy.R
-import kotlin.math.max
 
 class PagerSnapActivity : AppCompatActivity() {
 
@@ -52,6 +48,12 @@ class PagerSnapActivity : AppCompatActivity() {
     PagerSnapHelper().attachToRecyclerView(recyclerView)
   }
 
+
+  /**
+   * 离屏预加载
+   * 静止时离屏预加载
+   * bug：动画触发预加载的卡片瞬间回收
+   */
   private val myLinearLayoutManager = object : LinearLayoutManager(this) {
     private var mIsInScroll = false
     private var mScrollState = RecyclerView.SCROLL_STATE_IDLE
@@ -183,7 +185,7 @@ class PagerSnapActivity : AppCompatActivity() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
       holder.itemView.findViewById<TextView>(R.id.big_text_text).apply {
-        text = dataSet[position].num.toString()
+        text = dataSet[position].str
         textSize = 100f
         adjustGravity()
       }
@@ -221,13 +223,13 @@ class PagerSnapActivity : AppCompatActivity() {
   inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }
 
-data class Data(val num: Int, val type: Int)
+data class Data(val str: String, val type: Int)
 
 fun createListData(fromTo: IntRange, type1: Int, type2: Int): MutableList<Data> {
   val res = mutableListOf<Data>()
   for (i in fromTo) {
     val type = if (i % 2 == 0) type1 else type2
-    res.add(Data(i, type))
+    res.add(Data(i.toString(), type))
   }
   return res
 }

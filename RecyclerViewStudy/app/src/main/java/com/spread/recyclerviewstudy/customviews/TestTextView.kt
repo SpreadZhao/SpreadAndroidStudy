@@ -26,6 +26,7 @@ class TestTextView : AppCompatTextView {
 
   override fun onTouchEvent(event: MotionEvent?): Boolean {
     Log.d("TestRecyclerView", "ViewItem handle ${event?.actionStr()}[${event?.hashCode()}]")
+
     return super.onTouchEvent(event)
   }
 }
