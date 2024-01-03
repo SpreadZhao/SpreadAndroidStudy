@@ -5,9 +5,11 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import androidx.recyclerview.widget.RecyclerView
+import com.spread.recyclerviewstudy.preload.IDisPatcherRecyclerView
+import com.spread.recyclerviewstudy.preload.ViewHolderVisibilityDispatcher
 
 
-class TestRecyclerView : RecyclerView {
+class TestRecyclerView(override val mInnerDispatcher: ViewHolderVisibilityDispatcher) : RecyclerView, IDisPatcherRecyclerView {
   constructor(context: Context) : super(context)
 
   constructor(context: Context, attrs: AttributeSet) : super(context, attrs)

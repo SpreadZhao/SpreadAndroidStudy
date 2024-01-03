@@ -28,6 +28,7 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
     private const val ONE_THIRD_HEIGHT = SCREEN_HEIGHT / 3
     private const val DATA_TYPE_EVEN = 11 // 偶数
     private const val DATA_TYPE_ODD = 22  // 奇数
+    private const val DATA_TYPE_OTHER = 33
   }
 
   private lateinit var recyclerView: RecyclerView
@@ -81,7 +82,10 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
     private val mAdapter = mRecyclerView.adapter as MyAdapter
 
     private val btns: List<ButtonItem> = listOf(
+      ButtonItem("Remove3") { mAdapter.remove3() },
+      ButtonItem("InsertAfter2") { mAdapter.insertAfter2() },
       ButtonItem("Insert1") { mAdapter.insertAfterFirst() },
+      ButtonItem("Insert2") { mAdapter.insertBeforeFirst() },
       ButtonItem("RemoveLast") { mAdapter.removeLast() },
       ButtonItem("Reverse") { mAdapter.reverse() },
       ButtonItem("Append") { mAdapter.append() },
@@ -115,8 +119,10 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ONE_THIRD_HEIGHT + 10)
         background = if (viewType == DATA_TYPE_EVEN) {
           ColorDrawable(Color.parseColor("#CC0033"))
-        } else {
+        } else if (viewType == DATA_TYPE_ODD) {
           ColorDrawable(Color.parseColor("#0066CC"))
+        } else {
+          ColorDrawable(Color.parseColor("#f47920"))
         }
       }
       return MyViewHolder(view)
@@ -159,6 +165,17 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
       notifyItemRemoved(1)
     }
 
+    fun remove3() {
+      dataSet.removeAt(2)
+      notifyItemRemoved(2)
+    }
+
+    fun insertAfter2() {
+      val newItem = Data("Spread", DATA_TYPE_OTHER)
+      dataSet.add(2, newItem)
+      notifyItemInserted(2)
+    }
+
     fun reverse() {
       dataSet.reverse()
       notifyDataSetChanged()
@@ -178,9 +195,15 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
     }
 
     fun insertAfterFirst() {
-      val newItem = Data("Spread", DATA_TYPE_EVEN)
+      val newItem = Data("Spread", DATA_TYPE_OTHER)
       dataSet.add(1, newItem)
       notifyItemInserted(1)
+    }
+
+    fun insertBeforeFirst() {
+      val newItem = Data("Zhao", DATA_TYPE_OTHER)
+      dataSet.add(0, newItem)
+      notifyItemInserted(0)
     }
   }
 
