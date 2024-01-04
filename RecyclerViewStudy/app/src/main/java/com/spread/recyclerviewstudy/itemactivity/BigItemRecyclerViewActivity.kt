@@ -20,15 +20,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutParams
 import com.spread.recyclerviewstudy.R
+import com.spread.recyclerviewstudy.data.ItemType.DATA_TYPE_EVEN
+import com.spread.recyclerviewstudy.data.ItemType.DATA_TYPE_ODD
+import com.spread.recyclerviewstudy.data.ItemType.DATA_TYPE_OTHER
+import com.spread.recyclerviewstudy.preload.ViewHolderVisibilityDispatcher
+import com.spread.recyclerviewstudy.recyclerview.TestRecyclerView
 
 class BigItemRecyclerViewActivity : AppCompatActivity() {
   companion object {
     const val TAG = "BigItemRecyclerViewActivity-Spread"
     private const val SCREEN_HEIGHT = 2199
     private const val ONE_THIRD_HEIGHT = SCREEN_HEIGHT / 3
-    private const val DATA_TYPE_EVEN = 11 // 偶数
-    private const val DATA_TYPE_ODD = 22  // 奇数
-    private const val DATA_TYPE_OTHER = 33
   }
 
   private lateinit var recyclerView: RecyclerView
@@ -45,13 +47,11 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
     }
     recyclerView = findViewById(R.id.big_item_recyclerview)
     val adapter = MyAdapter()
-    val layoutManager = LinearLayoutManager(this).apply {
-      isItemPrefetchEnabled = false
-    }
+
     recyclerView.adapter = adapter
 //    recyclerView.setItemViewCacheSize(0)
 //    recyclerView.setHasFixedSize(true)
-    recyclerView.layoutManager = layoutManager
+    recyclerView.layoutManager = myLinearLayoutManager
     recyclerView.itemAnimator = null
 
     initBottomToolbar()
@@ -74,7 +74,9 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
     bottomToolbarRV.adapter = BottomToolbarButtonsAdapter(recyclerView)
   }
 
-  class MyLinearLayoutManager(context: Context) : LinearLayoutManager(context) {
+  private val myLinearLayoutManager = object : LinearLayoutManager(this) {
+  }.apply {
+    isItemPrefetchEnabled = false
   }
 
   inner class BottomToolbarButtonsAdapter(private val mRecyclerView: RecyclerView) : RecyclerView.Adapter<ButtonViewHolder>() {
@@ -134,22 +136,22 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
         textSize = 100f
         adjustGravity()
       }
-      printHolder("onBindViewHolder", holder)
+      printHolder(TAG, "onBindViewHolder", holder)
     }
 
     override fun onViewAttachedToWindow(holder: MyViewHolder) {
       super.onViewAttachedToWindow(holder)
-      printHolder("onViewAttachedToWindow", holder)
+      printHolder(TAG, "onViewAttachedToWindow", holder)
     }
 
     override fun onViewDetachedFromWindow(holder: MyViewHolder) {
       super.onViewDetachedFromWindow(holder)
-      printHolder("onViewDetachedFromWindow", holder)
+      printHolder(TAG, "onViewDetachedFromWindow", holder)
     }
 
     override fun onViewRecycled(holder: MyViewHolder) {
       super.onViewRecycled(holder)
-      printHolder("onViewRecycled", holder)
+      printHolder(TAG, "onViewRecycled", holder)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -219,10 +221,10 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
   inner class ButtonItem(val name: String, val onClick: View.OnClickListener)
 }
 
-private fun printHolder(event: String, holder: BigItemRecyclerViewActivity.MyViewHolder) {
+fun printHolder(tag: String, event: String, holder: RecyclerView.ViewHolder) {
   val holderId = holder.hashCode()
   val holderItemText = holder.itemView.findViewById<TextView>(R.id.big_text_text).text
   val holderAdapterPosition = holder.adapterPosition
   val holderLayoutPosition = holder.layoutPosition
-  Log.d(BigItemRecyclerViewActivity.TAG, "$event, holderId: $holderId, holderItemText: $holderItemText, adapterPosition: $holderAdapterPosition, layoutPosition: $holderLayoutPosition")
+  Log.d(tag, "$event, holderId: $holderId, holderItemText: $holderItemText, adapterPosition: $holderAdapterPosition, layoutPosition: $holderLayoutPosition")
 }

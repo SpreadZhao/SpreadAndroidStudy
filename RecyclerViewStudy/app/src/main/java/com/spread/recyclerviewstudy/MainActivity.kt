@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutParams
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.spread.recyclerviewstudy.itemactivity.BigItemRecyclerViewActivity
+import com.spread.recyclerviewstudy.itemactivity.DispatcherActivity
 import com.spread.recyclerviewstudy.itemactivity.PagerSnapActivity
 import com.spread.recyclerviewstudy.itemactivity.SimpleRecyclerViewActivity
 import com.spread.recyclerviewstudy.itemactivity.ViewPager2Activity
@@ -47,7 +48,8 @@ class MainActivity : AppCompatActivity() {
       ButtonInfo("View Pager", ViewPagerActivity::class.java),
       ButtonInfo("View Pager 2", ViewPager2Activity::class.java),
       ButtonInfo("Pager Snap", PagerSnapActivity::class.java),
-      ButtonInfo("Big Item", BigItemRecyclerViewActivity::class.java)
+      ButtonInfo("Big Item", BigItemRecyclerViewActivity::class.java),
+      ButtonInfo("Dispatcher", DispatcherActivity::class.java)
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainBtnsViewHolder {

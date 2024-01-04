@@ -5,16 +5,19 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import androidx.recyclerview.widget.RecyclerView
-import com.spread.recyclerviewstudy.preload.IDisPatcherRecyclerView
-import com.spread.recyclerviewstudy.preload.ViewHolderVisibilityDispatcher
+import com.spread.recyclerviewstudy.preload.IViewHolderVisibilityDispatcher
+import com.spread.recyclerviewstudy.preload.ScrollOccasion
+import com.spread.recyclerviewstudy.preload.WithDispatcher
 
 
-class TestRecyclerView(override val mInnerDispatcher: ViewHolderVisibilityDispatcher) : RecyclerView, IDisPatcherRecyclerView {
+class TestRecyclerView : RecyclerView {
   constructor(context: Context) : super(context)
 
   constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
   constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+  private var mDispatcher: IViewHolderVisibilityDispatcher? = null
 
   override fun requestLayout() {
 //    Log.d("TestRecyclerView", "requestLayout()")
@@ -34,6 +37,10 @@ class TestRecyclerView(override val mInnerDispatcher: ViewHolderVisibilityDispat
     Log.d("TestRecyclerView", "RecyclerView handle ${e?.actionStr()}[${e?.hashCode()}]")
     return super.onTouchEvent(e)
 //    return false
+  }
+
+  override fun onScrolled(dx: Int, dy: Int) {
+    super.onScrolled(dx, dy)
   }
 }
 
