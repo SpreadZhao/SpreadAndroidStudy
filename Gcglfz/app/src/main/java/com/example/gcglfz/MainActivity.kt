@@ -12,6 +12,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gcglfz.TestGame.Companion.hasStuIn
+import com.example.gcglfz.TestGame.Companion.hasStuOut
 
 class MainActivity : AppCompatActivity() {
 
@@ -103,10 +105,15 @@ class MainActivity : AppCompatActivity() {
     val runLayoutManager = LinearLayoutManager(this)
     val jumpLayoutManager = LinearLayoutManager(this)
     val liftLayoutManager = LinearLayoutManager(this)
-    mHealthAdapter = StudentAdapter(Events.basicHealthEvent.currStudents.toList())
-    mRunAdapter = StudentAdapter(Events.runEvent.currStudents.toList())
-    mJumpAdapter = StudentAdapter(Events.jumpEvent.currStudents.toList())
-    mLiftAdapter = StudentAdapter(Events.liftEvent.currStudents.toList())
+    mHealthAdapter = StudentAdapter(Events.basicHealthEvent)
+    mRunAdapter = StudentAdapter(Events.runEvent)
+    mJumpAdapter = StudentAdapter(Events.jumpEvent)
+    mLiftAdapter = StudentAdapter(Events.liftEvent)
+
+    Events.basicHealthEvent.adapter = mHealthAdapter
+    Events.runEvent.adapter = mRunAdapter
+    Events.jumpEvent.adapter = mJumpAdapter
+    Events.liftEvent.adapter = mLiftAdapter
 
     mHealthQueue.layoutManager = healthLayoutManager
     mRunQueue.layoutManager = runLayoutManager
@@ -121,11 +128,18 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun refreshUI() {
-    mHealthAdapter.updateNewList(Events.basicHealthEvent.currStudents)
-    mRunAdapter.updateNewList(Events.runEvent.currStudents)
-    mJumpAdapter.updateNewList(Events.jumpEvent.currStudents)
-    mLiftAdapter.updateNewList(Events.liftEvent.currStudents)
+
+//    mHealthAdapter.updateNewList(Events.basicHealthEvent.currStudents)
+//    mRunAdapter.updateNewList(Events.runEvent.currStudents)
+//    mJumpAdapter.updateNewList(Events.jumpEvent.currStudents)
+//    mLiftAdapter.updateNewList(Events.liftEvent.currStudents)
     currTimeView.text = currTime.toString()
+  }
+
+  private fun checkAdapter(adapter: StudentAdapter) {
+    if (adapter.event.hasStuIn && adapter.event.hasStuOut) {
+
+    }
   }
 
 }

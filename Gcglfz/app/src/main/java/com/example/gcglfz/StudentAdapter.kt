@@ -8,9 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import java.util.Queue
 
-class StudentAdapter(var students: List<Student>) :
+class StudentAdapter(val event: TestEvent) :
   RecyclerView.Adapter<StudentAdapter.ViewHolder>() {
 
   private var context: Context? = null
@@ -27,8 +26,9 @@ class StudentAdapter(var students: List<Student>) :
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    val idStr = students[position].id.toString()
-    val stu = students[position]
+    val list = event.currStudents.toList()
+    val idStr = list[position].id.toString()
+    val stu = list[position]
     val finishedEvent = arrayListOf<String>().apply {
       for (ev in stu.finishedEvent) {
         if (ev.value) add(Events.getName(ev.key))
@@ -50,10 +50,10 @@ class StudentAdapter(var students: List<Student>) :
     }
   }
 
-  override fun getItemCount() = students.size
+  override fun getItemCount() = event.currStudents.size
 
-  fun updateNewList(newStudents: Queue<Student>) {
-    students = newStudents.toList()
-    notifyDataSetChanged()
-  }
+//  fun updateNewList(newStudents: Queue<Student>) {
+//    students = newStudents.toList()
+//    notifyDataSetChanged()
+//  }
 }

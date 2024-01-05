@@ -75,6 +75,8 @@ class TestGame {
           it.onFinishEvent(event, score)
           it.onLeaveEvent(event)
           val theHead = event.currStudents.poll()
+          event.addFlag(STU_LINE_FLAG_POLL)
+          event.adapter.notifyItemRemoved(0)
           if (it.status == StuStatus.PRE_IN_CACHE && it === theHead) {
             enCache(it)
           } else if (it.status == StuStatus.ALL_FINISH && it === theHead) {
@@ -93,6 +95,8 @@ class TestGame {
   private fun enQueue(stu: Student, event: TestEvent?) {
     event?.apply {
       currStudents.offer(stu)
+      addFlag(STU_LINE_FLAG_OFFER)
+      adapter.notifyItemInserted(currStudents.size - 1)
       stu.onInLine(this)
     }
   }
@@ -106,6 +110,21 @@ class TestGame {
   }
 
   companion object {
+
+    const val STU_LINE_FLAG_OFFER = 1
+
+    const val STU_LINE_FLAG_POLL = 1 shl 1
+
+    val TestEvent.hasStuIn: Boolean
+      get() = stuChangeFlag and STU_LINE_FLAG_OFFER != 0
+
+    val TestEvent.hasStuOut: Boolean
+      get() = stuChangeFlag and STU_LINE_FLAG_POLL != 0
+
+    fun TestEvent.addFlag(flag: Int) {
+      stuChangeFlag = stuChangeFlag or flag
+    }
+
     @Volatile
     var nextStuId = 1
     fun generateStudent(): Student {
