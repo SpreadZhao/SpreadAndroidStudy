@@ -52,7 +52,7 @@ class ViewHolderVisibilityDispatcher private constructor(): IViewHolderVisibilit
     return !(itemEnd <= 0 || itemStart >= mRecyclerView.height)
   }
 
-  private fun handleAttachedVHVisibility() {
+  private fun handleAttachedVHsVisibility() {
     for (i in 0..<mRecyclerView.childCount) {
       val child = mRecyclerView.getChildAt(i)
       val oldVisible = child.isVisibleByTag
@@ -72,32 +72,13 @@ class ViewHolderVisibilityDispatcher private constructor(): IViewHolderVisibilit
     }
   }
 
-  private fun handleChildVisibility(holder: ViewHolder) {
-    handleChildVisibility(holder.itemView)
-  }
-
-  private fun handleChildVisibility(itemView: View, fromDetach: Boolean = false) {
+  private fun handleDetachedChildVisibility(itemView: View) {
     val oldVisible = itemView.isVisibleByTag
-    if (fromDetach && oldVisible) {
-      mListener?.let {
-        itemView.isVisibleByTag = false
-        val holder = itemView.viewHolder ?: return@let
+    if (oldVisible && mListener != null) {
+      itemView.isVisibleByTag = false
+      val holder = itemView.viewHolder ?: return
 //        Log.d(TAG, "Detach[${holder.adapterPosition + 1}] oldVisible: $oldVisible")
-        it.onViewHolderInvisible(holder)
-      }
-      return
-    } else if (fromDetach) {
-      return
-    }
-    val newVisible = isChildVisibleVertical(itemView)
-    itemView.isVisibleByTag = newVisible
-    mListener?.let {
-      val holder = itemView.viewHolder ?: return@let
-      if (newVisible) {
-        it.onViewHolderVisible(holder)
-      } else {
-        it.onViewHolderInvisible(holder)
-      }
+      mListener!!.onViewHolderInvisible(holder)
     }
   }
 
@@ -119,8 +100,9 @@ class ViewHolderVisibilityDispatcher private constructor(): IViewHolderVisibilit
 
   override fun dispatchVisibility(occasion: Occasion) {
     when (occasion) {
-      is ScrollOccasion -> handleAttachedVHVisibility()
-      is DetachOccasion -> handleChildVisibility(occasion.itemView, true)
+      is ScrollOccasion -> handleAttachedVHsVisibility()
+      is DetachOccasion -> handleDetachedChildVisibility(occasion.itemView)
+      is LayoutCompletedOccasion -> handleAttachedVHsVisibility()
     }
   }
 

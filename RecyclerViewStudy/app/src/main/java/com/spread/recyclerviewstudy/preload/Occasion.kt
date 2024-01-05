@@ -8,3 +8,5 @@ sealed interface Occasion
 data object ScrollOccasion : Occasion
 
 data class DetachOccasion(val itemView: View) : Occasion
+
+data object LayoutCompletedOccasion : Occasion

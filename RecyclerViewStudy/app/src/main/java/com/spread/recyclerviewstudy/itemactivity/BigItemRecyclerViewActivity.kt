@@ -25,6 +25,8 @@ import com.spread.recyclerviewstudy.data.ItemType.DATA_TYPE_ODD
 import com.spread.recyclerviewstudy.data.ItemType.DATA_TYPE_OTHER
 import com.spread.recyclerviewstudy.preload.ViewHolderVisibilityDispatcher
 import com.spread.recyclerviewstudy.recyclerview.TestRecyclerView
+import com.spread.recyclerviewstudy.tool.BottomToolbarButtonsAdapter
+import com.spread.recyclerviewstudy.tool.ButtonItem
 
 class BigItemRecyclerViewActivity : AppCompatActivity() {
   companion object {
@@ -54,7 +56,7 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
     recyclerView.layoutManager = myLinearLayoutManager
     recyclerView.itemAnimator = null
 
-    initBottomToolbar()
+    initBottomToolbar(adapter)
 
     findViewById<Button>(R.id.delete_2).setOnClickListener {
       adapter.remove2()
@@ -68,48 +70,26 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
     }
   }
 
-  private fun initBottomToolbar() {
+  private fun initBottomToolbar(adapter: MyAdapter) {
     val bottomToolbarRV = findViewById<RecyclerView>(R.id.big_item_bottom_toolbar_recyclerview)
     bottomToolbarRV.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-    bottomToolbarRV.adapter = BottomToolbarButtonsAdapter(recyclerView)
+    bottomToolbarRV.adapter = BottomToolbarButtonsAdapter(recyclerView, listOf(
+      ButtonItem("Remove3") { adapter.remove3() },
+      ButtonItem("InsertAfter2") { adapter.insertAfter2() },
+      ButtonItem("Insert1") { adapter.insertAfterFirst() },
+      ButtonItem("Insert2") { adapter.insertBeforeFirst() },
+      ButtonItem("RemoveLast") { adapter.removeLast() },
+      ButtonItem("Reverse") { adapter.reverse() },
+      ButtonItem("Append") { adapter.append() },
+      ButtonItem("Scroll") { recyclerView.scrollBy(0, 392) },
+      ButtonItem("Scroll2") { recyclerView.scrollBy(0, 74) },
+      ButtonItem("Scroll3") { recyclerView.scrollBy(0, 278) }
+    ))
   }
 
   private val myLinearLayoutManager = object : LinearLayoutManager(this) {
   }.apply {
     isItemPrefetchEnabled = false
-  }
-
-  inner class BottomToolbarButtonsAdapter(private val mRecyclerView: RecyclerView) : RecyclerView.Adapter<ButtonViewHolder>() {
-
-    private val mAdapter = mRecyclerView.adapter as MyAdapter
-
-    private val btns: List<ButtonItem> = listOf(
-      ButtonItem("Remove3") { mAdapter.remove3() },
-      ButtonItem("InsertAfter2") { mAdapter.insertAfter2() },
-      ButtonItem("Insert1") { mAdapter.insertAfterFirst() },
-      ButtonItem("Insert2") { mAdapter.insertBeforeFirst() },
-      ButtonItem("RemoveLast") { mAdapter.removeLast() },
-      ButtonItem("Reverse") { mAdapter.reverse() },
-      ButtonItem("Append") { mAdapter.append() },
-      ButtonItem("Scroll") { mRecyclerView.scrollBy(0, 392) },
-      ButtonItem("Scroll2") { mRecyclerView.scrollBy(0, 74) },
-      ButtonItem("Scroll3") { mRecyclerView.scrollBy(0, 278) }
-    )
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ButtonViewHolder {
-      val btn = Button(parent.context).apply {
-        layoutParams = ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-      }
-      return ButtonViewHolder(btn)
-    }
-
-    override fun onBindViewHolder(holder: ButtonViewHolder, position: Int) {
-      holder.bind(btns[position])
-    }
-
-    override fun getItemCount(): Int {
-      return btns.size
-    }
   }
 
   inner class MyAdapter : RecyclerView.Adapter<MyViewHolder>() {
@@ -211,14 +191,6 @@ class BigItemRecyclerViewActivity : AppCompatActivity() {
 
   inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-  inner class ButtonViewHolder(private val buttonView: Button) : RecyclerView.ViewHolder(buttonView) {
-    fun bind(item: ButtonItem) {
-      buttonView.text = item.name
-      buttonView.setOnClickListener(item.onClick)
-    }
-  }
-
-  inner class ButtonItem(val name: String, val onClick: View.OnClickListener)
 }
 
 fun printHolder(tag: String, event: String, holder: RecyclerView.ViewHolder) {
